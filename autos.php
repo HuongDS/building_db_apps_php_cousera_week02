@@ -1,80 +1,71 @@
-<html>
+<?php
+require_once "pdo.php";
 
+if (!isset($_GET['name']) || strlen($_GET['name']) < 1) {
+    die('Name parameter missing');
+}
+
+if (isset($_POST['logout'])) {
+    header("Location: index.php");
+    return;
+}
+
+$failure = false;
+$success = false;
+
+if (isset($_POST['make']) && isset($_POST['year']) && isset($_POST['mileage'])) {
+    if (strlen($_POST['make']) < 1) {
+        $failure = "Make is required";
+    } elseif (!is_numeric($_POST['year']) || !is_numeric($_POST['mileage'])) {
+        $failure = "Mileage and year must be numeric";
+    } else {
+        $stmt = $pdo->prepare('INSERT INTO autos (make, year, mileage) VALUES (:mk, :yr, :mi)');
+        $stmt->execute(array(
+            ':mk' => $_POST['make'],
+            ':yr' => $_POST['year'],
+            ':mi' => $_POST['mileage']
+        ));
+        $success = "Record inserted";
+    }
+}
+?>
+
+<html>
 <head>
     <title>Huong Dang a04e8bd0</title>
 </head>
-
 <body>
-    <?php
+<h1>Tracking Autos for <?= htmlentities($_GET['name']) ?></h1>
 
-        require_once "pdo.php";
-
-        if (isset($_GET['name'])) {
-            echo "<h1>Tracking Autos for ".$_GET['name']."</h1>";
-        } else {
-            die("Name parameter missing");
-        }
-
-        if(isset($_POST['logout'])) {
-            header('Location: index.php');
-        } else {
-         
-            if(isset($_POST['make']) && isset($_POST['year']) && isset($_POST['mileage'])) {
-
-                if ($_POST['make'] == "") {
-                    echo "<p style='color: red'>Make is required</p>";
-                } elseif (is_numeric($_POST['year']) && is_numeric($_POST['mileage'])) {
-                        $stmt = $pdo->prepare('INSERT INTO autos
-                            (make, year, mileage) VALUES ( :mk, :yr, :mi)');
-                            
-                        $stmt->execute(array(
-                            ':mk' => $_POST['make'],
-                            ':yr' => $_POST['year'],
-                            ':mi' => $_POST['mileage'])
-                        );
-
-                        echo "<p style='color: green'>Record inserted</p>";
-                } else {
-                    echo "<p style='color: red'>Mileage and year must be numeric</p>";   
-                }
-                
-            }   
-        }
-
-    ?>
+<?php
+if ($failure !== false) {
+    echo('<p style="color: red;">' . htmlentities($failure) . "</p>\n");
+}
+if ($success !== false) {
+    echo('<p style="color: green;">' . htmlentities($success) . "</p>\n");
+}
+?>
 
 <form method="post">
-    <p>Make:
-        <input name="make">
-    </p>
-    <p>Year:
-        <input size="40" name="year">
-    </p>
-    <p>Mileage:
-        <input size="40" name="mileage">
-    </p>
+    <p>Make: <input type="text" name="make"></p>
+    <p>Year: <input type="text" name="year"></p>
+    <p>Mileage: <input type="text" name="mileage"></p>
     <p>
-        <input type="submit" value="Add"> <!-- sửa ở đây -->
-        <input type="submit" value="logout" name="logout">
+        <input type="submit" value="Add">
+        <input type="submit" name="logout" value="Logout">
     </p>
 </form>
 
-
-    <h2>Automobiles</h2>
-    <ul>
-        <?php
-            
-            $statement = $pdo->query("SELECT auto_id, make, year, mileage FROM autos");
-            
-            while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-                echo "<li> ";
-                echo $row['year']." ";
-                echo htmlentities($row['make'])." / ";
-                echo $row['mileage'];
-                echo "</li>";
-            }
-        ?>
-    </ul>
+<h2>Automobiles</h2>
+<ul>
+<?php
+$stmt = $pdo->query("SELECT make, year, mileage FROM autos");
+while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+    echo "<li>" . htmlentities($row['make']) . " " .
+         htmlentities($row['year']) . " / " .
+         htmlentities($row['mileage']) . "</li>\n";
+}
+?>
+</ul>
 </body>
-
 </html>
