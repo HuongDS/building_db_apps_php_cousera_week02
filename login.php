@@ -13,7 +13,7 @@ if ( isset($_POST['who']) && isset($_POST['pass']) ) {
 
 <html>
 <head>
-    <title>Huong Dang a04e8bd0</title>
+    <title>Sanh Phuc Nguyen (fb00771a)</title>
 </head>
 <body>
     <h1>Please Log In</h1>
