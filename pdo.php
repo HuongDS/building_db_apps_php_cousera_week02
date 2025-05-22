@@ -1,6 +1,6 @@
 <?php
-$host = '127.0.0.1';
-$port = '3306';
+$host = 'centerbeam.proxy.rlwy.net';
+$port = '31652';
 $db   = 'misc';
 $user = 'fred';
 $pass = 'zap';
