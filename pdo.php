@@ -3,7 +3,7 @@ $host = '127.0.0.1';
 $port = '3306';
 $db   = 'misc';
 $user = 'fred';
-$pass = 'alan';
+$pass = 'zap';
 
 $pdo = null;
 try {
