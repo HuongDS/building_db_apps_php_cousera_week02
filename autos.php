@@ -43,21 +43,22 @@
 
     ?>
 
-    <form method="post">
-        <p>Make:
-            <input name="make">
-        </p>
-        <p>Year:
-            <input size="40" name="year">
-        </p>
-        <p>Mileage:
-            <input size="40" name="mileage">
-        </p>
-        <p>
-            <input type="submit" value="Add" name="Add" />
-            <input type="submit" value="logout" name="logout" />
-        </p>
-    </form>
+<form method="post">
+    <p>Make:
+        <input name="make">
+    </p>
+    <p>Year:
+        <input size="40" name="year">
+    </p>
+    <p>Mileage:
+        <input size="40" name="mileage">
+    </p>
+    <p>
+        <input type="submit" value="Add"> <!-- sửa ở đây -->
+        <input type="submit" value="logout" name="logout">
+    </p>
+</form>
+
 
     <h2>Automobiles</h2>
     <ul>
