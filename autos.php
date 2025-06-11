@@ -32,7 +32,7 @@ if (isset($_POST['make']) && isset($_POST['year']) && isset($_POST['mileage'])) 
 
 <html>
 <head>
-    <title>Sanh Phuc Nguyen (b3d29210)</title>
+    <title>Sanh Phuc Nguyen (86892ef7)</title>
 </head>
 <body>
 <h1>Tracking Autos for <?= htmlentities($_GET['name']) ?></h1>
